@@ -34,5 +34,5 @@ jobs:
 
       - name: Run Script
         run: |
-          export sha=github.sha
+          export sha=${{github.sha}}
           npm run dev
