@@ -1,0 +1,12 @@
+name: Auto Push And Tag
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - v*
+
+jobs:
+  cicd:
+    uses: 12ain/test-cd/.github/workflows/cicd.yml@main
