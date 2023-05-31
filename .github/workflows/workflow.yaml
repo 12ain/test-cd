@@ -13,6 +13,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+        - name: Clear repository
+          run: |
+            pwd
+            echo $GITHUB_WORKSPACE
+            sudo rm -fr $GITHUB_WORKSPACE && mkdir $GITHUB_WORKSPACE
         - id: changed_files
           name: git-changesets
           uses: collin-miller/git-changesets@v0.0.2
