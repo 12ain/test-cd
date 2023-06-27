@@ -24,7 +24,7 @@ jobs:
       
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v4
         with:
           images: ${{ env.IMAGE_NAME }}
           flavor: |
@@ -32,7 +32,7 @@ jobs:
           tags: |
             type=schedule
             type=ref,event=tag
-            type=sha,prefix=,format=long,enable=true,priority=100
+            type=sha,prefix=alpha-,format=long,enable=true,priority=100
 
       # - name: Build and push Docker image
       #   uses: docker/build-push-action@v2
