@@ -45,6 +45,7 @@ jobs:
         with:
           commit_message: Auto Commit
           branch: demo
+          create_branch: true
           file_pattern: "*.txt"
 
       # - name: Build and push Docker image
