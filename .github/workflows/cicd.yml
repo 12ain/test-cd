@@ -13,9 +13,11 @@ env:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    outputs:
+      commit_hash: ${{ steps.commit.outputs.commit_hash }}
     steps:
       - name: Chekout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -34,6 +36,17 @@ jobs:
             type=ref,event=tag
             type=sha,prefix=alpha-,format=long,enable=true,priority=100
 
+      - name: create test file
+        run: echo "hello world!" >> demo.txt
+
+      - name: Auto Commit
+        id: commit
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Auto Commit
+          branch: demo
+          file_pattern: "*.txt"
+
       # - name: Build and push Docker image
       #   uses: docker/build-push-action@v2
       #   with:
@@ -51,7 +64,9 @@ jobs:
       tag: ${{ steps.stage.outputs.tag }}
     steps:
       - name: Chekout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ needs.ci.outputs.commit_hash }}
 
       - name: setup-k8s-kustomize
         uses: grumpy-programmer/setup-k8s-kustomize@v1
